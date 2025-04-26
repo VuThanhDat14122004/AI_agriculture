@@ -21,7 +21,7 @@ This project addresses the problem of detecting and counting dairy cattle in ima
 # Dataset
 - I use the <a href="https://www.kaggle.com/datasets/trainingdatapro/cows-detection-dataset/data">cow dataset</a>
 - Train: 40 images
-- Test: 11 images
+- Val: 11 images
 
 # Parameters and Hyperparameters
 - Img size: 640
