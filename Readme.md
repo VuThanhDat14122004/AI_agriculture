@@ -30,6 +30,7 @@ This project addresses the problem of detecting and counting dairy cattle in ima
 - Initial learning rate: 5e-3
 - Optimizer: AdamW
 - weight_decay: 10e-2
+- [detail parameters](file_work/runs/detect/train/args.yaml)
 # Result
 After training the model on Google Colab, the best model achieved the following results (validation set):
 | Class | Images | Instances | Precision (P) | Recall (R) | mAP@0.5 | mAP@0.5:0.95 |
