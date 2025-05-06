@@ -7,16 +7,17 @@ import matplotlib.pyplot as plt
 
 
 model = YOLO("runs/detect/train/weights/best.pt")
-
+# model(source='cow_vid.mp4', show=True, save = False)
 video_path = 'cow_vid.mp4'
 video = cv2.VideoCapture(video_path)
+font = cv2.FONT_HERSHEY_SIMPLEX
 while video.isOpened():
     ret, frame = video.read()
     if not ret:
         break
-    results = model(frame, conf=0.6)    
+    results = model(frame, conf=0.5)    
     count = len(results[0].boxes)
-    print(f'Detected objects count: {count}')
+    cv2.putText(frame, f"number of cow: {count}", (30,30), font, 1, (0,255,0), 2, cv2.LINE_4)
     # Display the results
     for result in results:
         boxes = results[0].boxes.xyxy.cpu().numpy()  # Get bounding box coordinates
@@ -26,7 +27,7 @@ while video.isOpened():
             x1, y1, x2, y2 = box  # x_min, ymin, xmax, ymax = box
             confidence = confidences[i]
             cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
-            cv2.putText(frame, f'Count: {i}, confidence: {confidence:.2f}',\
+            cv2.putText(frame, f'cow, confidence: {confidence:.2f}',\
                         (int(x1), int(y1) - 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
     cv2.imshow('Video', frame)
