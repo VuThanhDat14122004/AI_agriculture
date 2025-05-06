@@ -6,9 +6,11 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
+COPY requirements.txt .
 COPY app /app
+COPY templates /app/templates
 
 RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 5000
-CMD ["python", "app/main.py"]
+CMD ["python", "main.py"]
