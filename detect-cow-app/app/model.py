@@ -1,6 +1,10 @@
 import cv2
 from ultralytics import YOLO
 import os
+import torch
+
+# Thêm class DetectionModel vào danh sách an toàn
+torch.serialization.add_safe_globals(['ultralytics.nn.tasks.DetectionModel'])
 
 # Kiểm tra file mô hình
 if not os.path.exists("best.pt"):
