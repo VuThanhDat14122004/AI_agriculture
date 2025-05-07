@@ -6,13 +6,14 @@ RUN apt-get update && apt-get install -y \
     ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
+WORKDIR /cow_project
+
 COPY requirements.txt .
-COPY app /app
-COPY templates /app/templates
-COPY best.pt /app/best.pt
+COPY app /cow_project/app
+COPY templates /cow_project/app/templates
 
 RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 5000
-CMD ["python", "main.py"]
+
+CMD ["python", "app/main.py"]

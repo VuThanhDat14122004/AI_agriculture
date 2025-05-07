@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Kết quả</title>
+    <title>Result</title>
 </head>
 <body>
-    <h1>Video sau khi xử lý</h1>
-    <video style="max-width: 100%; height: auto;" controls>
+    <h1>Processed Video</h1>
+    <video width="640" height="480" controls>
         <source src="{{ url_for('video', filename=filename) }}" type="video/mp4">
-        Trình duyệt của bạn không hỗ trợ video.
+        Your browser does not support the video tag.
     </video>
     <br>
-    <a href="{{ url_for('video', filename=filename) }}" download>Tải video về</a>
+    <a href="{{ url_for('video', filename=filename) }}" download>Download Video</a>
 </body>
 </html>

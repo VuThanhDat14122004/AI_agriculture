@@ -5,4 +5,4 @@ services:
     plan: free
     branch: master
     region: oregon
-    rootDir: detect-cow-app
+    rootDir: .
