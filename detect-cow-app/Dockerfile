@@ -10,6 +10,8 @@ WORKDIR /cow_project
 
 COPY requirements.txt .
 COPY app /cow_project/app
+COPY app/best.pt /cow_project/app/best.pt
+
 COPY templates /cow_project/app/templates
 
 RUN pip install --no-cache-dir -r requirements.txt
