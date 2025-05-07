@@ -25,8 +25,11 @@ def detect_and_count_cows(video_path):
                 cv2.putText(frame, f'cow, confidence: {confidence:.2f}',\
                             (int(x1), int(y1) - 10),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-        cv2.imshow('Video', frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+        ret, buffer = cv2.imencode('.jpg', frame)
+        frame = buffer.tobytes()
+
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
     video.release()
     cv2.destroyAllWindows()
