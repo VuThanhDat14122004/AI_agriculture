@@ -13,8 +13,7 @@ def upload_file():
         if file:
             filepath = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
             file.save(filepath)
-            count = detect_and_count_cows(filepath)
-            return f"Có {count} con bò trong video."
+            detect_and_count_cows(filepath)
     return render_template("index.html")
 
 if __name__ == "__main__":

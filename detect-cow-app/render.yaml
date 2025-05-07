@@ -1,8 +1,8 @@
 services:
   - type: web
-    name: cow-counter
+    name: detect-and-count
     env: docker
     plan: free
-    branch: main
+    branch: master
     region: oregon
-    
+    rootDir: detect-cow-app
