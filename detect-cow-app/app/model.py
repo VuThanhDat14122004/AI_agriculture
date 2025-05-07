@@ -5,6 +5,12 @@ import ultralytics
 
 
 torch.serialization.add_safe_globals([ultralytics.nn.tasks.DetectionModel])
+torch.serialization.add_safe_globals([torch.nn.modules.container.Sequential])
+torch.serialization.add_safe_globals([torch.nn.modules.module.Module])
+
+## add safe globals for YOLO from ultralytics
+torch.serialization.add_safe_globals([ultralytics.yolo.engine.model.YOLO])
+torch.serialization.add_safe_globals([ultralytics.yolo.engine.model.YOLOPredictor])
 
 model = YOLO("best.pt")
 
