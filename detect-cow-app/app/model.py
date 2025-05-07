@@ -1,6 +1,7 @@
 import cv2
 from ultralytics import YOLO
 import torch
+import ultralytics
 
 
 torch.serialization.add_safe_globals([ultralytics.nn.tasks.DetectionModel])
