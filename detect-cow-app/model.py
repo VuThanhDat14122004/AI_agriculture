@@ -1,29 +1,34 @@
 import cv2
 from ultralytics import YOLO
 import os
-import gdown
 
-MODEL_PATH = "best.pt"
-url = "https://drive.google.com/uc?id=1-fn96rROeiwnvBcHjV-N6xMfgoSC8eht"
+model = YOLO("best.pt")
 
-gdown.download(url, MODEL_PATH, quiet=False)
+def process_video(input_path, output_path="output.mp4"):
+    cap = cv2.VideoCapture(input_path)
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps = cap.get(cv2.CAP_PROP_FPS)
 
-model = YOLO(MODEL_PATH)
+    # Định dạng codec (MP4)
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    out = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
 
-def process_video(video_path):
-    cap = cv2.VideoCapture(video_path)
-    while cap.isOpened():
+    while True:
         ret, frame = cap.read()
         if not ret:
             break
+
         results = model(frame)
-        for r in results:
-            boxes = r.boxes
-            for box in boxes:
-                x1, y1, x2, y2 = map(int, box.xyxy[0])
-                conf = box.conf[0].item()
-                cv2.rectangle(frame, (x1, y1), (x2, y2), (0,255,0), 2)
-                cv2.putText(frame, f"Cow {conf:.2f}", (x1, y1 - 10),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 2)
-        yield frame
+        boxes = results[0].boxes.xyxy.cpu().numpy()
+        confidences = results[0].boxes.conf.cpu().numpy()
+        for box, confidence in zip(boxes, confidences):
+            x1, y1, x2, y2 = map(int, box)
+            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.putText(frame, f'{confidence:.2f}', (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        out.write(frame)
+
+
     cap.release()
+    out.release()
+    return output_path

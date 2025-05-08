@@ -1,17 +1,17 @@
 import streamlit as st
-import tempfile
-import cv2
+import os
 from model import process_video
 
-st.title("Cow Detection App")
+st.title("Detect and Count Cows in Video")
 
 uploaded_file = st.file_uploader("Upload a video", type=["mp4", "avi", "mov"])
-if uploaded_file:
-    tfile = tempfile.NamedTemporaryFile(delete=False)
-    tfile.write(uploaded_file.read())
-    tfile.close()
 
-    stframe = st.empty()
-    for frame in process_video(tfile.name):
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        stframe.image(frame, channels="RGB")
+if uploaded_file:
+    with open("input_video.mp4", "wb") as f:
+        f.write(uploaded_file.read())
+
+    st.info("⏳ Processing video, please wait...")
+    output_path = process_video("input_video.mp4")
+    st.success("✅ Done!")
+
+    st.video(output_path)
