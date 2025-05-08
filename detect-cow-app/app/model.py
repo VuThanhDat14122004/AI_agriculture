@@ -9,6 +9,15 @@ torch.serialization.add_safe_globals([ultralytics.nn.tasks.DetectionModel])
 torch.serialization.add_safe_globals([torch.nn.modules.container.Sequential])
 torch.serialization.add_safe_globals([torch.nn.modules.module.Module])
 torch.serialization.add_safe_globals([ultralytics.nn.modules.conv.Conv])
+torch.serialization.add_safe_globals([torch.nn.modules.conv.Conv2d])
+torch.serialization.add_safe_globals([torch.nn.modules.pooling.MaxPool2d])
+torch.serialization.add_safe_globals([torch.nn.modules.pooling.AvgPool2d])
+torch.serialization.add_safe_globals([torch.nn.modules.pooling.AdaptiveAvgPool2d])
+torch.serialization.add_safe_globals([torch.nn.modules.pooling.AdaptiveMaxPool2d])
+torch.serialization.add_safe_globals([torch.nn.modules.pooling.GlobalAvgPool2d])
+torch.serialization.add_safe_globals([torch.nn.modules.pooling.GlobalMaxPool2d])
+torch.serialization.add_safe_globals([torch.nn.modules.pooling.GlobalPool2d])
+
 
 
 model = YOLO("best.pt")
