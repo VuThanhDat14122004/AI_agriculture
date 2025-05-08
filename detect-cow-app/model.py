@@ -1,7 +1,14 @@
 import cv2
 from ultralytics import YOLO
+import os
+import gdown
 
-model = YOLO("best.pt")  # Hoặc tải từ URL nếu file lớn
+MODEL_PATH = "best.pt"
+url = "https://drive.google.com/file/d/1-fn96rROeiwnvBcHjV-N6xMfgoSC8eht/view?usp=sharing"
+
+gdown.download(url, MODEL_PATH, quiet=False)
+
+model = YOLO(MODEL_PATH)
 
 def process_video(video_path):
     cap = cv2.VideoCapture(video_path)
