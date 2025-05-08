@@ -1,8 +1,0 @@
-services:
-  - type: web
-    name: detect-cow-streamlit
-    env: docker
-    plan: free
-    branch: master
-    region: oregon
-    rootDir: .
