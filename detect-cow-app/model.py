@@ -4,7 +4,7 @@ import os
 import gdown
 
 MODEL_PATH = "best.pt"
-url = "https://drive.google.com/file/d/1-fn96rROeiwnvBcHjV-N6xMfgoSC8eht/view?usp=sharing"
+url = "https://drive.google.com/uc?id=1-fn96rROeiwnvBcHjV-N6xMfgoSC8eht"
 
 gdown.download(url, MODEL_PATH, quiet=False)
 
