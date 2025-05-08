@@ -4,13 +4,10 @@ import torch
 import ultralytics
 
 
-# add safe for all components in utralytics and torch, to avoid error when loading model
-torch.serialization.add_safe_globals([torch, torch.nn, torch.optim, torch.utils.data, torch.multiprocessing])
-torch.serialization.add_safe_globals([ultralytics])
 
 torch.serialization.add_safe_globals([ultralytics.nn.tasks.DetectionModel])
-# torch.serialization.add_safe_globals([torch.nn.modules.container.Sequential])
-# torch.serialization.add_safe_globals([torch.nn.modules.module.Module])
+torch.serialization.add_safe_globals([torch.nn.modules.container.Sequential])
+torch.serialization.add_safe_globals([torch.nn.modules.module.Module])
 
 
 model = YOLO("best.pt")
