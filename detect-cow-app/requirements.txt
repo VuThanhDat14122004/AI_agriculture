@@ -1,5 +1,8 @@
 gdown==5.2.0
-opencv_python==4.10.0.84
-opencv_python_headless==4.10.0.84
-streamlit==1.45.0
-ultralytics==8.3.112
+streamlit>=1.33.0
+opencv-python-headless==4.9.0.80
+ultralytics>=8.1.0
+numpy
+torch>=2.2.0
+torchvision
+
