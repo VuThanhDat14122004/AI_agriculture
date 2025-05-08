@@ -1,59 +1,31 @@
 import cv2
 from ultralytics import YOLO
-import torch
-import ultralytics
 
+model = YOLO("app/best.pt")
 
+def detect_and_count_cows(video_path):
+    cap = cv2.VideoCapture(video_path)
+    width, height = int(cap.get(3)), int(cap.get(4))
+    fps = cap.get(cv2.CAP_PROP_FPS)
 
-torch.serialization.add_safe_globals([ultralytics.nn.tasks.DetectionModel])
-torch.serialization.add_safe_globals([torch.nn.modules.container.Sequential])
-torch.serialization.add_safe_globals([torch.nn.modules.module.Module])
-torch.serialization.add_safe_globals([ultralytics.nn.modules.conv.Conv])
-torch.serialization.add_safe_globals([torch.nn.modules.conv.Conv2d])
-torch.serialization.add_safe_globals([torch.nn.modules.pooling.MaxPool2d])
-torch.serialization.add_safe_globals([torch.nn.modules.pooling.AvgPool2d])
-torch.serialization.add_safe_globals([torch.nn.modules.pooling.AdaptiveAvgPool2d])
-torch.serialization.add_safe_globals([torch.nn.modules.pooling.AdaptiveMaxPool2d])
-torch.serialization.add_safe_globals([torch.nn.modules.batchnorm.BatchNorm2d])
-torch.serialization.add_safe_globals([torch.nn.modules.activation.ReLU])
-torch.serialization.add_safe_globals([torch.nn.modules.activation.Sigmoid])
+    out_path = "/tmp/output.mp4"
+    out = cv2.VideoWriter(out_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (width, height))
 
-
-
-model = YOLO("best.pt")
-
-def detect_and_count_cows(video_path, output_path):
-    video = cv2.VideoCapture(video_path)
-    width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
-    height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    fps = video.get(cv2.CAP_PROP_FPS)
-
-    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    out = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
-
-    font = cv2.FONT_HERSHEY_SIMPLEX
-
-    while video.isOpened():
-        ret, frame = video.read()
+    while cap.isOpened():
+        ret, frame = cap.read()
         if not ret:
             break
-
-        results = model(frame, conf=0.5)
-        count = len(results[0].boxes)
-
-        cv2.putText(frame, f"number of cow: {count}", (30, 30), font, 1, (0, 255, 0), 2)
-
-        boxes = results[0].boxes.xyxy.cpu().numpy()
+        results = model(frame)
         confidences = results[0].boxes.conf.cpu().numpy()
-
-        for i in range(len(boxes)):
-            x1, y1, x2, y2 = boxes[i]
-            confidence = confidences[i]
+        boxes = results[0].boxes.xyxy.cpu().numpy()
+        for box, confidence in zip(boxes, confidences):
+            x1, y1, x2, y2 = map(int, box)
             cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
-            cv2.putText(frame, f'cow: {confidence:.2f}', (int(x1), int(y1) - 10),
-                        font, 0.5, (0, 255, 0), 2)
-
+            cv2.putText(frame, f'cow, confidence: {confidence:.2f}',\
+                        (int(x1), int(y1) - 10),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
         out.write(frame)
 
-    video.release()
+    cap.release()
     out.release()
+    return out_path

@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: detect-and-count
+    name: detect-cow-streamlit
     env: docker
     plan: free
     branch: master
