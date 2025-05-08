@@ -2,7 +2,12 @@ import cv2
 from ultralytics import YOLO
 import os
 import time
+import gdown
 
+url_model = "https://drive.google.com/uc?id=1-fn96rROeiwnvBcHjV-N6xMfgoSC8eht"
+# model = YOLO("best.pt")
+if not os.path.exists("best.pt"):
+    gdown.download(url_model, "best.pt", quiet=False)
 model = YOLO("best.pt")
 
 def process_video(input_path, output_path):
