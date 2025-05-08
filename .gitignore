@@ -2,3 +2,4 @@ archive
 file_work/*.pt
 file_work/data
 *.mp4
+detect-cow-app/__pycache__
