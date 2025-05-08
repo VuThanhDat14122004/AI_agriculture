@@ -1,6 +1,7 @@
 streamlit
-opencv-python-headless==4.7.0.72
-ultralytics
-numpy
-torch
-torchvision
+opencv-python-headless>=4.9.0
+ultralytics==8.0.196
+numpy==1.24.3
+torch==1.13.1
+torchvision==0.14.1
+ffmpeg-python
