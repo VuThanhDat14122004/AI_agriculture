@@ -3,6 +3,8 @@ from ultralytics import YOLO
 import os
 import time
 import gdown
+from ultralytics import settings
+
 
 url_model = "https://drive.google.com/uc?id=1-fn96rROeiwnvBcHjV-N6xMfgoSC8eht"
 # model = YOLO("best.pt")
