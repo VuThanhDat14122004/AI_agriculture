@@ -49,6 +49,7 @@ After training the model on Google Colab, the best model achieved the following 
 
 - mAP@0.5:0.95: Mean Average Precision averaged over IoU thresholds from 0.5 to 0.95 (step 0.05). A stricter and more comprehensive metric for model performance.
 
+- report video: <a href="https://www.youtube.com/watch?v=roZYg2pYl4o">video</a>
 # References
 Here are the blogs I referenced for the implementation.
 
